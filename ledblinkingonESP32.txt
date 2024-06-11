@@ -1,0 +1,23 @@
+define OutputPin 4
+
+  bool STATE = 0;
+
+void setup() 
+{
+  //Serial.begin(115200);
+  //Serial.println("Hello, ESP32!");
+
+  pinMode(OutputPin, OUTPUT);
+
+}
+
+void loop() 
+{
+  digitalWrite(OutputPin, STATE);
+
+  STATE =! STATE;
+
+ // printf("%d\n",STATE);
+
+  delay(2000); // this speeds up the simulation
+}
