@@ -1,0 +1,47 @@
+#include <Arduino.h>
+
+#define TRIG_PIN 23 // Ultrasonic sensor TRIG pin
+#define ECHO_PIN 22 // Ultrasonic sensor ECHO pin
+#define RED_PIN 12
+#define YELLOW_PIN 4
+#define GREEN_PIN 27
+
+float duration_us, distance_cm;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+  pinMode(RED_PIN, OUTPUT);
+  pinMode(YELLOW_PIN, OUTPUT);
+  pinMode(GREEN_PIN, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+
+  duration_us = pulseIn(ECHO_PIN, HIGH);
+  distance_cm = 0.017 * duration_us;
+
+  if (distance_cm < 20) {
+    digitalWrite(RED_PIN, HIGH);
+    digitalWrite(YELLOW_PIN, LOW);
+    digitalWrite(GREEN_PIN, LOW);
+  } else if (distance_cm <= 50) {
+    digitalWrite(RED_PIN, LOW);
+    digitalWrite(YELLOW_PIN, HIGH);
+    digitalWrite(GREEN_PIN, LOW);
+  } else {
+    digitalWrite(RED_PIN, LOW);
+    digitalWrite(YELLOW_PIN, LOW);
+    digitalWrite(GREEN_PIN, HIGH);
+  }
+
+  Serial.print("Distance: ");
+  Serial.print(distance_cm);
+  Serial.println(" cm");
+
+  delay(500);
+}
