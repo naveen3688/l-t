@@ -1,0 +1,49 @@
+const int trigPin = 23; // Ultrasonic sensor trigger pin
+const int echoPin = 22; // Ultrasonic sensor echo pin
+
+const int redLedPin = 5;  // Red LED pin
+const int greenLedPin = 15; // Green LED pin
+
+unsigned long duration;
+float distance;
+
+void setup() {
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(redLedPin, OUTPUT);
+  pinMode(greenLedPin, OUTPUT);
+
+  digitalWrite(redLedPin, LOW);
+  digitalWrite(greenLedPin, LOW);
+
+  Serial.begin(9600);
+}
+
+void loop() {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  duration = pulseIn(echoPin, HIGH);
+  if (duration > 0) {
+    distance = duration * 0.034 / 2; // Calculate distance in cm
+
+    Serial.print("Distance: ");
+    Serial.print(distance);
+    Serial.println(" cm");
+
+    if (distance <= 200) {
+      digitalWrite(redLedPin, HIGH);
+      digitalWrite(greenLedPin, LOW);
+    } else {
+      digitalWrite(redLedPin, LOW);
+      digitalWrite(greenLedPin, HIGH);
+    }
+  } else {
+    Serial.println("Error: No pulse received.");
+  }
+
+  delay(10000); // Delay 10 seconds before next measurement
+}
