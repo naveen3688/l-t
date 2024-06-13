@@ -1,0 +1,17 @@
+const int ledPin = LED_BUILTIN; // Use the built-in LED (LD4)
+
+void setup() {
+    pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+    digitalWrite(ledPin, HIGH); // Turn on the LED
+    delay(500); // Wait for 500 ms
+    digitalWrite(ledPin, LOW); // Turn off the LED
+    delay(500); // Wait for 500 ms
+}
+
+
+
+
+in this program LED is toggling for every one second
